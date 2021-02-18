@@ -11,7 +11,6 @@ class Post extends Model
         'subtitle',
         'text',
         'author',
-        'img_path',
         'publication_date'
     ];
 }
