@@ -13,4 +13,10 @@ class Post extends Model
         'author',
         'publication_date'
     ];
+
+    //Db relationships
+    public function infoPost()
+    {
+        return $this->hasOne('App\InfoPost');
+    }
 }
