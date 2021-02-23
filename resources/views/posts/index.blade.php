@@ -32,8 +32,8 @@
                     <td>{{ $post->id }}</td>
                     <td>{{ $post->title }}</td>
                     <td>{{ $post->subtitle }}</td>
-                    <td>{{ $post->text }}</td>
                     <td>{{ $post->author }} </td>
+                    <td>{{ Str::words($post->text, '10') }}</td>
                     <td>{{ $post->publication_date }} </td>
                     <td>
                         <a href="{{ route('posts.show',  $post->id) }}" class="btn btn-outline-light">Mostra</a>
