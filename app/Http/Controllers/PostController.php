@@ -3,9 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Post;
 
 class PostController extends Controller
-{
+{   
+    private $postValidation = [
+        'title' => 'required|string|max:30',
+        'subtitle' => 'required|string|max:50',
+        'text' => 'required|numeric',
+        'author' => 'required|numeric',
+        'publication_date' => 'required|date'
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +21,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -23,7 +33,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -34,7 +44,19 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        
+        $request->validate($this->$postValidation);
+
+        $post = new Post();
+        $post->fill($data);
+        $post->save();
+
+        return redirect()
+            ->route('posts.index')
+            ->with('message', 'Post '. $post->name. ' creato correttamente');
+
+
     }
 
     /**
@@ -43,9 +65,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -54,9 +76,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -66,9 +88,17 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $data = $request->all();
+
+        $request->validate($this->postValidation);
+
+        $post->update($data);
+
+        return redirect()
+            ->route('posts.index')
+            ->with('message', 'Post '. $post->name. ' aggiornata correttamente');
     }
 
     /**
@@ -77,8 +107,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $beer->delete();
+
+        return redirect()
+            ->route('posts.index')
+            ->with('message', 'Birra '. $post->name. ' cancellata correttamente');
     }
 }
