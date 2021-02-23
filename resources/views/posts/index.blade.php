@@ -20,7 +20,6 @@
                 <th>Autore</th>
                 <th>Data di creazione</th>
                 <th>Data di utlima modifica</th>
-                <th>Status</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -30,6 +29,7 @@
         <tbody>
             @foreach ($posts as $post)
                 <tr>
+                    <td>{{ $post->id }}</td>
                     <td>{{ $post->title }}</td>
                     <td>{{ $post->subtitle }}</td>
                     <td>{{ $post->text }}</td>
